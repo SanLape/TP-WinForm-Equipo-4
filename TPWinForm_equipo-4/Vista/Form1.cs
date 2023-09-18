@@ -35,9 +35,6 @@ namespace Vista
         }
 
 
-        }
-
-
 
         //Faltan botones para reccorer imagenes
         private void cargarImagen(string imagen)
@@ -115,7 +112,7 @@ namespace Vista
 
         }
 
-        }
+
         private void btnAgregar_Click(object sender, EventArgs e)
         {
             Articulo nuevo = new Articulo();
@@ -137,6 +134,7 @@ namespace Vista
             mar.ShowDialog();
             CargaDatos();
         }
+
 
         private void btnFiltro_Click(object sender, EventArgs e)
         {
@@ -201,6 +199,7 @@ namespace Vista
             {
                 MessageBox.Show(ex.ToString());
             }
+        }
 
         private void dgvArticulo_SelectionChanged(object sender, EventArgs e)
         {
@@ -246,7 +245,7 @@ namespace Vista
         private void btnSiguiente_Click(object sender, EventArgs e)
         {
             int largo = listaImganes.Count();
-            
+
             img = img + 1;
             if (img < largo)
             {
@@ -258,6 +257,12 @@ namespace Vista
                 return;
             }
 
+
+
+
+
         }
+
     }
 }
+
