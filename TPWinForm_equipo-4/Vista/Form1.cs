@@ -27,6 +27,14 @@ namespace Vista
         {
             CargaDatos();
 
+            cboCampo.Items.Add("Número");
+            cboCampo.Items.Add("Nombre");
+            cboCampo.Items.Add("Descripción");
+            cboCriterio.Items.Add("Mayor a");
+            cboCriterio.Items.Add("Menor a");
+        }
+
+
         }
 
 
@@ -107,6 +115,7 @@ namespace Vista
 
         }
 
+        }
         private void btnAgregar_Click(object sender, EventArgs e)
         {
             Articulo nuevo = new Articulo();
@@ -128,6 +137,70 @@ namespace Vista
             mar.ShowDialog();
             CargaDatos();
         }
+
+        private void btnFiltro_Click(object sender, EventArgs e)
+        {
+        }
+
+        private bool validarFiltro()
+        {
+            if (cboCampo.SelectedIndex < 0)
+            {
+                MessageBox.Show("Por favor, seleccione el campo para filtrar.");
+                return true;
+            }
+            if (cboCriterio.SelectedIndex < 0)
+            {
+                MessageBox.Show("Por favor, seleccione el criterio para filtrar.");
+                return true;
+            }
+            if (cboCampo.SelectedItem.ToString() == "Número")
+            {
+                if (string.IsNullOrEmpty(txtFiltroAvanzado.Text))
+                {
+                    MessageBox.Show("Debes cargar el filtro para numéricos...");
+                    return true;
+                }
+                if (!(soloNumeros(txtFiltroAvanzado.Text)))
+                {
+                    MessageBox.Show("Solo nros para filtrar por un campo numérico...");
+                    return true;
+                }
+
+            }
+
+            return false;
+        }
+
+        private bool soloNumeros(string cadena)
+        {
+            foreach (char caracter in cadena)
+            {
+                if (!(char.IsNumber(caracter)))
+                    return false;
+            }
+            return true;
+        }
+
+        private void btnFiltro_Click_1(object sender, EventArgs e)
+        {
+
+            ArticuloNegocio negocio = new ArticuloNegocio();
+            try
+            {
+                if (validarFiltro())
+                    return;
+
+                string campo = cboCampo.SelectedItem.ToString();
+                string criterio = cboCriterio.SelectedItem.ToString();
+                string filtro = txtFiltroAvanzado.Text;
+                dgvArticulo.DataSource = negocio.filtrar(campo, criterio, filtro);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
 
         private void dgvArticulo_SelectionChanged(object sender, EventArgs e)
         {
@@ -184,6 +257,7 @@ namespace Vista
                 MessageBox.Show("EL ARTICULO NO POSEE MAS IMAGENES CARGADAS");
                 return;
             }
+
         }
     }
 }
